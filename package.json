@@ -1,0 +1,25 @@
+{
+  "name": "multisignft",
+  "version": "1.0.0",
+  "description": "multisig nft web app",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --hot"
+  },
+  "author": "0xf0ss",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.1",
+    "@truffle/contract": "^4.6.15",
+    "@truffle/hdwallet-provider": "^2.1.7",
+    "dotenv": "^16.0.3",
+    "ethers": "^6.0.2"
+  }
+}

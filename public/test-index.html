@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@0.20.7/dist/web3.min.js"></script>
+  </head>
+  <body>
+    <button onclick="proposeNFT()">Propose NFT</button>
+    <button onclick="voteNFT()">Vote on NFT</button>
+
+    <script>
+      // Check if Metamask is available
+      if (typeof web3 !== "undefined") {
+        web3 = new Web3(web3.currentProvider);
+      } else {
+        alert("Please install Metamask");
+      }
+
+      // ABI for the MultisigNFT contract
+      const abi = [
+        {
+          "inputs": [
+            {
+              "internalType": "address[]",
+              "name": "_coSigners",
+              "type": "address[]"
+            },
+            {
+              "internalType": "uint8",
+              "name": "_requiredSignatures",
+              "type": "uint8"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_tokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint8",
+              "name": "_action",
+              "type": "uint8"
+            }
+          ],
+          "name": "propose",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint",
+              "name": "_proposalId",
+              "type": "uint"
+            },
+            {
+              "internalType": "bool",
+              "name": "_approval",
+              "type": "bool"
+            }
+          ],
+          "name": "vote",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ];
+
+      // Address of the deployed MultisigNFT contract
+      const contractAddress = "0x742d35Cc6634C0532925a3b844Bc454e4438f44e";
+
+      // Connect to the contract
+      const contract = new web3.eth.Contract(abi, contractAddress);
+
+      async function proposeNFT() {
+        // Get the current account
+        const accounts = await web3.eth.getAccounts();
+        const from = accounts[0];
+
+        // Propose a transaction
+        const tokenId = "12345";
+        const action = "1";
+        contract.methods.propose(tokenId, action).send({ from: from });
+      }
+
+      async function voteNFT() {
+        // Get the current account
+        const accounts = await web3.eth.getAccounts();
+        const from = accounts[0];
+
+        // Vote on a proposal
+        const proposalId = "0";
+        const approval = true;
+        contract.methods.vote(proposalId, approval).send({ from: from });
+      }
+    </script>
+  </body>
+</html>
+
